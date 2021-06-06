@@ -31,6 +31,9 @@ func main() {
 	pr := pinRequestHandler{pin: *skittlespin.NewSkittlesPin(21, "relay", "output")}
 	http.HandleFunc("/garage", pr.pinHandler)
 	http.HandleFunc("/health", healthCheck)
-	http.ListenAndServe(":8000", nil)
+	err := http.ListenAndServe(":8000", nil)
+	if err != nil {
+		fmt.Print(err)
+	}
 
 }
