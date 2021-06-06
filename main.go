@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"net/http"
-
 	"stuff/skittlespin"
+	"sync"
 )
 
 type pinRequestHandler struct {
@@ -12,13 +12,25 @@ type pinRequestHandler struct {
 }
 
 func (pr pinRequestHandler) pinHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello world")
+	globalLock.Lock()
 	pr.pin.ActuatePin()
+	globalLock.Unlock()
 }
+
+func healthCheck(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "text/plain")
+	fmt.Fprintf(w, "Up and Atom!")
+
+}
+
+var (
+	globalLock sync.Mutex
+)
 
 func main() {
 	pr := pinRequestHandler{pin: *skittlespin.NewSkittlesPin(21, "relay", "output")}
-	http.HandleFunc("/", pr.pinHandler)
+	http.HandleFunc("/garage", pr.pinHandler)
+	http.HandleFunc("/health", healthCheck)
 	http.ListenAndServe(":8000", nil)
 
 }

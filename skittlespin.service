@@ -1,0 +1,14 @@
+[Unit]
+Description=Garage Door Relay Pin 
+After=network.target
+
+[Service]
+Type=simple
+User=pi  # Omit user/group if creating user service file
+Group=pi
+WorkingDirectory=/home/pi
+ExecStart=/home/pi/main
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
