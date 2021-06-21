@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"stuff/skittlespin"
 	"sync"
+	"zerrofour4/go-garage/skittlespin"
 
 	"github.com/d2r2/go-dht"
 )
