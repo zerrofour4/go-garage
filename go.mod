@@ -1,4 +1,4 @@
-module go-garage
+module github.com/zerrofour4/go-garage
 
 require (
 	github.com/MichaelS11/go-dht v0.1.0
